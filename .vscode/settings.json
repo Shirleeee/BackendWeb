@@ -1,0 +1,11 @@
+{
+  "deno.enable": true,
+  "deno.lint": false,
+  "deno.unstable": false,
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "denoland.vscode-deno",
+  "liveServer.settings.port": 5501,
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}

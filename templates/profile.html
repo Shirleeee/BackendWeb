@@ -1,0 +1,253 @@
+{% extends "layout.html" %} {% block right %} {% if userAuth %} -->
+
+<div class="profilCard">
+  {% if urlToFile %}
+  <img src="{{urlToFile}}" class="Img--thumb" />
+  <!-- <p>/{{pathToFile}}</p> -->
+  {% elif pathToFile %}
+  <img src="/{{pathToFile}}" class="Img--thumb" />
+  {% endif %}
+
+  <div class="lines">
+    <div class="profil">
+      <div class="profilCard-h3">
+        <!-- <h3>Hello, {{user.username}}</h3> -->
+
+        <div class="context">
+          <div class="username">
+            <label name="username"
+              >Username: <span>{{user.username}}</span></label
+            >
+          </div>
+          <div class="biography">
+            <label name="biography"
+              >Your biography: <span><br />{{user.biography}}</span></label
+            >
+          </div>
+          <div class="location">
+            <label name="location"
+              >Location: <span>{{user.location}}</span></label
+            >
+          </div>
+          <div class="links">
+            <label name="Links"
+              >Website:
+              <span
+                ><a href="{{user.website}}">{{user.website}}</a></span
+              ></label
+            >
+          </div>
+          {% if self %}
+
+          <button><a href="/editProfile/{{user.id}}">Edit Profile</a></button>
+          {% endif %} {% if admin == "majoradmin"%}
+          <form
+            accept-charset="UTF-8"
+            method="post"
+            novalidate=""
+            action="/changeRole/{{user.id}}"
+          >
+            <input type="hidden" name="_csrf" value="{{ form._csrf }}" />
+
+            <label for="changeRole">Which role?</label>
+            <select id="changeRole" name="changeRole">
+              <option value="{{role}}">{{role}}</option>
+              {% if role === "user" %}
+              <option value="admin">Admin</option>
+              {% elif role === "admin" %}
+              <option value="user">User</option>
+              {% endif %}
+            </select>
+            {% if self == false %}
+            <div class="namebobt">
+              <button type="submit">Change Role</button>
+            </div>
+            {% endif %} {% endif %}
+          </form>
+          {% if admin == "admin" or admin == "majoradmin" or self == true%}
+
+          <button><a href="/deleteUser/{{user.id}}">Delete User </a></button>
+
+          {% endif %}
+
+          <option value="{{role}}">{{role}}</option>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endif %}{%endblock%} {% block content %}{% if userAuth %}
+
+<div class="halloprofil">
+  <h1>Assets</h1>
+</div>
+<div class="allMyAssContainer">
+  <div class="leftContentObj"></div>
+</div>
+
+<!-- <p id="name" hidden>{{datapathsArr.length}}</p> -->
+<div id="filePaths" hidden>{{datapathsArr}}</div>
+<div id="assetnames" hidden>{{assNameArr}}</div>
+<div id="sizeArr" hidden>{{sizeArr}}</div>
+<div id="idAssetArr" hidden>{{idAssetArr}}</div>
+<div id="likesAssArr" hidden>{{likesAssArr}}</div>
+{% if self %}
+<div id="self" hidden>true</div>
+{% endif %}
+
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
+  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js";
+  import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js";
+  const scene = new THREE.Scene();
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  // Berechnen Sie die Größe des Fensters basierend auf der Größe des Bildschirms
+  let windowWidth = screenWidth / 3;
+  let windowHeight = screenHeight / 4;
+
+  // Legen Sie die Größe des Fensters fest
+  const windowSmallWidth = windowWidth;
+  const windowSmallHeight = windowHeight;
+
+  function makeScene(elem) {
+    const canvasContainer = document.getElementById("canvas-container");
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      windowSmallWidth / windowSmallHeight,
+      0.1,
+      1000
+    );
+
+    const mainLight = new THREE.PointLight(0xffdab9, 1, 1000);
+    const fillLight = new THREE.PointLight(0xffdab9, 0.75, 1000);
+    const rimLight = new THREE.PointLight(0xffdab9, 0.5, 1000);
+    const light = new THREE.AmbientLight(0x404040);
+    mainLight.position.set(0, 0, 100);
+    fillLight.position.set(100, 100, 100);
+    rimLight.position.set(-100, -100, 100);
+
+    scene.add(mainLight);
+    scene.add(fillLight);
+    scene.add(rimLight);
+    scene.add(light);
+
+    const geometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+    geometry.rotateX(-Math.PI / 2);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x808080,
+      castShadow: true,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, -10, 0);
+    scene.add(mesh);
+
+    return { scene, camera, elem };
+  }
+
+  function setupScene1(datafileName, div) {
+    document.querySelector(".allMyAssContainer").appendChild(div);
+
+    const sceneInfo = makeScene(div);
+
+    const gltfLoader = new GLTFLoader();
+
+    datafileName = "/" + datafileName;
+
+    gltfLoader.load(datafileName, (asset) => {
+      asset.scene.position.set(0, -0.5, 0);
+
+      let position = new THREE.Vector3(
+        asset.scene.position.x,
+        asset.scene.position.y,
+        asset.scene.position.z
+      );
+
+      console.log(position);
+      sceneInfo.scene.add(asset.scene);
+      sceneInfo.mesh = asset.scene;
+    });
+    return sceneInfo;
+  }
+
+  const filePathArr = document
+    .getElementById("filePaths")
+    .textContent.split(",");
+  const assetnames = document
+    .getElementById("assetnames")
+    .textContent.split(",");
+  const sizeArr = document.getElementById("sizeArr").textContent.split(",");
+  const idAssetArr = document
+    .getElementById("idAssetArr")
+    .textContent.split(",");
+  const likesAssArr = document
+    .getElementById("likesAssArr")
+    .textContent.split(",");
+
+  let scenes;
+
+  function createAndAdd(classname, ele, labeltitle, arr = "") {
+    let p = document.createElement(ele);
+    p.className = classname;
+    p.innerHTML = labeltitle + arr;
+    return p;
+  }
+  const self = document.getElementById("self");
+  console.log(self + "    <-----------self");
+  for (let index = 0; index < filePathArr[index].length; index++) {
+    let allMyAssContainer = document
+      .querySelector(".allMyAssContainer")
+      .querySelector(".leftContentObj");
+
+    let contentCards = createAndAdd("cards", "a", "see Details ...");
+    allMyAssContainer.appendChild(contentCards);
+    contentCards.href = `/detailAsset/${idAssetArr[index]}`;
+    let pNameAss = createAndAdd(" ", "p", "Name: ", assetnames[index]);
+    contentCards.appendChild(pNameAss);
+    let pSizeAss = createAndAdd(" ", "p", "Size: ", sizeArr[index] + " kb");
+    contentCards.appendChild(pSizeAss);
+    let pLikesAss = createAndAdd(" ", "p", "Likes: ", likesAssArr[index]);
+    contentCards.appendChild(pLikesAss);
+    let buttonsDiv = document.querySelector(".buttonsDiv");
+    if (self) {
+      let buttonDeleteAss = createAndAdd("deletbobt", "a", "| delete ", "");
+      buttonDeleteAss.href = `/reallyDelete/${idAssetArr[index]}`;
+      contentCards.appendChild(buttonDeleteAss);
+      // console.log(idAssetArr[index]);
+      let buttoneditNameAss = createAndAdd("namebobt", "a", "| edit name", "");
+
+      buttoneditNameAss.href = `/detailAsset/${idAssetArr[index]}`;
+      contentCards.appendChild(buttoneditNameAss);
+    }
+    scenes = setupScene1(filePathArr[index], allMyAssContainer);
+    renderSceneInfo(scenes);
+  }
+
+  function renderSceneInfo(scenes) {
+    const { scene, camera, elem } = scenes;
+
+    const renderer = new THREE.WebGLRenderer();
+
+    renderer.setSize(windowSmallWidth, windowSmallHeight);
+
+    elem.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0, 0);
+    controls.enableRotate = true;
+    camera.position.set(0, 10, 20);
+    controls.update();
+
+    renderer.setClearColor(new THREE.Color(0x87ceeb));
+    animate();
+    function animate() {
+      requestAnimationFrame(animate);
+      renderer.render(scene, camera);
+    }
+  }
+</script>
+
+{% endif %} {%endblock%}

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Instagram, Facebook, Twitter, Icons -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="https://use.typekit.net/oum3rma.css" />
+    <!-- Typo Jörn -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Righteous&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+    </style>
+    <title>Open Source Assets</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a href="/"><h1>Open Source Assets</h1></a>
+        {% block header %} {% endblock %} {% if userAuth %}
+        <div class="alert">
+          <span class="closebtn"></span>
+          <strong> {{flashText}} </strong>
+        </div>
+        {% endif %}
+        <div class="burger-menu">
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+          <div class="burger-line"></div>
+
+          <ul class="burger-menu-content">
+            <li><a href="/about/">About Existance</a></li>
+
+            {% if userAuth %}
+            <li><a href="/logout/{{userid}}">Log Out</a></li>
+            <li><a href="/">Show</a></li>
+
+            <li><a href="/addAssets">Add an 3D Asset</a></li>
+            <!-- <li><a href="/myassets">All my Assets</a></li> -->
+            <li><a href="/ownProfile/{{userid}}">Profile</a></li>
+            {% else %}
+            <li><a href="/login">Sign in</a></li>
+            <li><a href="/">Show</a></li>
+            <li><a href="/register">Sign up free</a></li>
+            {% endif %}
+          </ul>
+        </div>
+      </header>
+
+      <section class="navbar">
+        <div class="navbar-links">
+          <a href="/about/">About Existance</a>
+
+          {% if userAuth %}
+          <a href="/logout/{{userid}}">Log Out</a>
+          <a href="/">Show</a>
+          <a href="/addAssets">Add an 3D Asset</a>
+          <!-- <a href="/myassets">All my Assets</a> -->
+          <a href="/ownProfile/{{userid}}">Profile</a>
+
+          {% else %}
+          <a href="/login">Sign in</a>
+          <a href="/">Show</a>
+          <a href="/register">Sign up free</a>
+          {% endif %}
+        </div>
+      </section>
+
+      <section class="contentMeta">{% block right %} {%endblock%}</section>
+
+      <section class="mainContent">{% block content %} {% endblock %}</section>
+
+      <section class="overView">{% block left %} {% endblock %}</section>
+
+      <section class="footer">
+        <h4>Open Source Assets</h4>
+        <p>
+          The "Open Source Assets" offers every USer free assets fordownload.<br />
+          These Assest were part of the training to the media computer scientist
+          in the Focus "Film", at the University of Flensburg.
+        </p>
+        <p>made by Shirley Lein & Joern Seydel</p>
+
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-youtube"></i>
+        <a href="/docu">Documentation</a>
+        <a href="/kollophone">Kollophone</a>
+        <a href="/impressum">Impressum</a>
+      </section>
+    </div>
+    <script>
+      const burgerMenuButton = document.querySelector(".burger-menu");
+      const burgerMenuContent = document.querySelector(".burger-menu-content");
+
+      burgerMenuButton.addEventListener("click", () => {
+        burgerMenuContent.classList.toggle("visible");
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,152 @@
+{% extends "layout.html" %} {%block content%} {% if userAuth %}
+
+<h1>{{flashText}}</h1>
+{% if deleteUser or role == "admin" or role == "majoradmin" %}
+<div>
+  <div>
+    <p>{{user.username}}</p>
+  </div>
+  <div>
+    <h3>Firstname:</h3>
+    <p>{{user.firstName}}</p>
+  </div>
+  <div>
+    <h3>Lastname:</h3>
+    <p>{{user.lastName}}</p>
+  </div>
+</div>
+<form method="post">
+  <button type="submit">YES</button>
+</form>
+<a href="/profile/{{user.id}}"><button>To All Your Assets</button></a>
+
+{% elif deleteComment %}
+<div>
+  <div>
+    <p>{{comment.releasedDate}}</p>
+  </div>
+  <div>
+    <article>
+      <p>{{comment.commentText}}</p>
+    </article>
+  </div>
+</div>
+<form method="post">
+  <button type="submit">YES</button>
+</form>
+<a href="/getComments/{{comment.assetId}}"
+  ><button>To All Your Assets</button></a
+>
+
+{% else %}
+<form method="post">
+  <button type="submit">YES</button>
+</form>
+<div class="canvas"></div>
+<p id="getDatafile" data-file-name="{{asset.datapath}}">
+  Datafilename: {{asset.datapath}}
+</p>
+<p id="getDatafile" data-file-name="{{asset.datapath}}">
+  Datafilename: {{asset.name}}
+  <a href="/profile/{{asset.userId}}"><button>To All Your Assets</button></a>
+
+  {% endif %}
+
+  <script type="module">
+    import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
+    import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js";
+    import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js";
+
+    const scene = new THREE.Scene();
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  // Berechnen Sie die Größe des Fensters basierend auf der Größe des Bildschirms
+  let windowWidth = screenWidth / 2;
+  let windowHeight = screenHeight / 2;
+
+  // Legen Sie die Größe des Fensters fest
+  const windowSmallWidth = windowWidth;
+  const windowSmallHeight = windowHeight;
+    const camera = new THREE.PerspectiveCamera(
+      75,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000
+    );
+
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(windowSmallWidth, windowSmallHeight);
+    // Hintergrundbeleuchtung
+    renderer.setClearColor(new THREE.Color(0x87ceeb));
+    // Boden
+    const geometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+    geometry.rotateX(-Math.PI / 2);
+    const material = new THREE.MeshStandardMaterial({
+      color: 0x808080,
+      castShadow: true,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.set(0, -10, 0);
+    scene.add(mesh);
+    const canvasContainer = document.getElementById("canvas-container");
+    document.querySelector(".canvas").appendChild(renderer.domElement);
+
+    // Main und Dreipunktbeleuchtung
+    const mainLight = new THREE.PointLight(0xffffff, 1, 1000);
+    const fillLight = new THREE.PointLight(0xffffff, 0.75, 1000);
+    const rimLight = new THREE.PointLight(0xffffff, 0.5, 1000);
+    const light = new THREE.AmbientLight(0x404040);
+
+    mainLight.position.set(0, 0, 100);
+    fillLight.position.set(100, 100, 100);
+    rimLight.position.set(-100, -100, 100);
+
+    scene.add(mainLight);
+    scene.add(fillLight);
+    scene.add(rimLight);
+    scene.add(light);
+
+    const datafileName = document
+      .querySelector("#getDatafile")
+      .getAttribute("data-file-name");
+    console.log(datafileName + " <---------->" + typeof datafileName);
+
+    const gltfLoader = new GLTFLoader();
+
+    let assetobj;
+
+    gltfLoader.load("/" + datafileName, (asset) => {
+      asset.scene.position.set(0, -0.5, 0);
+
+      let position = new THREE.Vector3(
+        asset.scene.position.x,
+        asset.scene.position.y,
+        asset.scene.position.z
+      );
+      assetobj = asset.scene;
+      console.log(position);
+      scene.add(asset.scene);
+    });
+
+    // Objekt Controller
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    //mouse rotation mit klick + scroll
+    controls.target.set(0, 0, 0);
+    controls.enableRotate = true;
+    camera.position.set(0, 10, 20);
+    controls.update();
+    // koordinatensystem
+
+    export function animate(datafileName) {
+      requestAnimationFrame(animate);
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+  </script>
+
+  {% endif %} {%endblock%}
+</p>

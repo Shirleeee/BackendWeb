@@ -1,0 +1,41 @@
+{% extends "layout.html" %} {%block content%}
+
+<h2>ACCOUNT SIGN IN</h2>
+<div class="login-form-container">
+  <form accept-charset="UTF-8" method="post" novalidate="">
+    <input type="hidden" name="_csrf" value="{{ form._csrf }}" />
+
+    <div>
+      {% if errors.login %}
+      <p class="Form-error">{{errors.login}}</p>
+      {% endif %}
+      <div class="form-group">
+        <label for="exampleInputEmail1">Username:</label>
+        {% if errors.username %}
+        <p class="Form-error">{{errors.username}}</p>
+        {% endif %}<input
+          formcontrolname="username"
+          name="username"
+          placeholder=""
+          required=""
+          type="email"
+          value=""
+        />
+      </div>
+      <div class="form-group">
+        <label for="exampleInputPassword1">Password:</label> {% if
+        errors.password %}
+        <p class="Form-error">{{errors.password}}</p>
+        {% endif %}<input
+          formcontrolname="password"
+          id="text-auth-password"
+          name="password"
+          type="password"
+        />
+      </div>
+    </div>
+    <button type="submit" class="login-button">Sign in</button>
+  </form>
+</div>
+
+{%endblock%} S

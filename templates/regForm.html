@@ -1,0 +1,107 @@
+{% extends "layout.html" %} {%block content%}
+<h1>Register here</h1>
+
+{% if flashText %}
+
+<p>{{flashText}}</p>
+{% endif %}
+
+<div class="regFormContainer">
+  <form accept-charset="UTF-8" method="post" novalidate="">
+    <input type="hidden" name="_csrf" value="{{ form._csrf }}" />
+    <div>
+      <img src="{{form.avatar}}" class="avatarPic" />
+      <input type="hidden" name="avatar" value="{{form.avatar}}" />
+    </div>
+
+    <label for="username">Username</label>
+    <div>
+      {% if errors.userName %}
+      <p class="Form-error">{{errors.userName}}</p>
+      {% endif %}
+      <input
+        type="text"
+        autocorrect="off"
+        autocapitalize="none"
+        name="username"
+        maxlength="20"
+        value="{{form.userName}}"
+      />
+    </div>
+
+    <label for="firstName">First Name</label>
+    <div>
+      {% if errors.firstName %}
+      <p class="Form-error">{{errors.firstName}}</p>
+      {% endif %}
+      <input
+        type="text"
+        autocorrect="off"
+        autocapitalize="none"
+        name="firstName"
+        maxlength="20"
+        value="{{form.firstName}}"
+      />
+    </div>
+    <label for="lastName">Last Name</label>
+    <div>
+      {% if errors.lastName %}
+      <p class="Form-error">{{errors.lastName}}</p>
+      {% endif %}
+      <input
+        type="text"
+        autocorrect="off"
+        autocapitalize="none"
+        name="lastName"
+        maxlength="40"
+        value="{{form.lastName}}"
+      />
+    </div>
+
+    <label for="email">Email</label>
+
+    <div>
+      {% if errors.email %}
+      <p class="Form-error">{{errors.email}}</p>
+      {% endif %}
+      <input
+        type="email"
+        autocorrect="off"
+        autocapitalize="none"
+        name="email"
+        maxlength="40"
+        value="{{form.email}}"
+      />
+    </div>
+
+    <label for="password">Password</label>
+    <div>
+      {% if errors.password %}
+      <p class="Form-error">{{errors.password}}</p>
+      {% endif %}
+      <input
+        type="password"
+        formcontrolname="password"
+        name="password"
+        maxlength="30"
+      />
+    </div>
+
+    <label for="password_again">Password again</label>
+    <div>
+      {% if errors.password_again %}
+      <p class="Form-error">{{errors.password_again}}</p>
+      {% endif %}
+      <input
+        formcontrolname="password_again"
+        type="password"
+        name="password_again"
+        maxlength="30"
+      />
+      <button type="submit" class="create">Create your free account</button>
+    </div>
+
+    <button><a href="/" class="bagHom">Back to Home Dimension</a></button>
+  </form>
+</div>
+{%endblock%}

@@ -1,0 +1,100 @@
+{% extends "layout.html" %} {%block content%} {% if userAuth %}
+<div class="editProfilContainer">
+  <div>
+    {% if urlToFile %}
+    <img src="{{urlToFile}}" class="Img--thumb" />
+    <!-- <p>/{{pathToFile}}</p> -->
+    {% elif pathToFile %}
+    <img src="/{{pathToFile}}" class="Img--thumb" />
+    {% endif %}
+  </div>
+  <form action="" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ data.csrf }}" />
+
+    <label for="form_file" class=""> Avatar </label>
+    <div>
+      {% if errorsImage %}
+      <p class="Form-error">{{errorsImage.one}}</p>
+      <p class="Form-error">{{errorsImage.two}}</p>
+      <p class="Form-error">{{errorsImage.three}}</p>
+      <p class="Form-error">{{errorsImage.four}}</p>
+      {% endif %}
+      <input type="file" id="form_file" name="uploadProfileImage" value="" />
+    </div>
+
+    <div></div>
+
+    <div>
+      {% if errorsForm.username %}
+      <p class="Form-error">{{errorsForm.username}}</p>
+      {% endif %}
+      <label class="form-label">Username</label>
+      <input name="username" value="{{data.username}}" />
+    </div>
+    <div></div>
+    <div></div>
+    <div>
+      {% if errorsForm.biography %}
+      <p class="Form-error">{{errorsForm.biography}}</p>
+      {% endif %}
+      <label class="form-label">Your biography</label>
+
+      <textarea
+        name="biography"
+        class="form-input biography empty"
+        maxlength="256"
+        placeholder="Write a little more about yourself"
+        data-error-for="biography"
+      >
+{{data.biography}}</textarea
+      >
+    </div>
+    <div>
+      {% if errorsForm.location %}
+      <p class="Form-error">{{errorsForm.location}}</p>
+      {% endif %}
+      <label class="form-label">Your location</label>
+
+      <input
+        name="location"
+        value="{{data.location}}"
+        class="form-input location"
+        placeholder="Prag, CZ"
+      />
+    </div>
+
+    <div>
+      {% if errorsForm.website %}
+      <p class="Form-error">{{errorsForm.website}}</p>
+      {% endif %}
+
+      <label class="form-label">Website</label
+      ><input
+        class="form-input"
+        value="{{data.website}}"
+        name="website"
+        placeholder="https://example.org"
+      />
+    </div>
+    <div>///</div>
+    Please type below your password again or change it!
+    <div>
+      <label for="password">Password </label>
+      {% if errorsForm.password %}
+      <p class="Form-error">{{errorsForm.password}}</p>
+      {% endif %}
+      <input type="password" name="password" maxlength="100" />
+
+      <label for="password_again">Password again</label>
+
+      {% if errorsForm.password_again %}
+      <p class="Form-error">{{errorsForm.password_again}}</p>
+      {% endif %}
+      <input type="password" name="password_again" maxlength="100" />
+    </div>
+
+    <button type="submit" class="">Save profile</button>
+  </form>
+  <a href="/profile/{{data.id}}"><button>To All Your Assets</button></a>
+</div>
+{% endif %} {%endblock%}

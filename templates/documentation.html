@@ -1,0 +1,904 @@
+{% extends "layout.html" %} {%block content%}
+
+<section class="Doku">
+  <div class="dokuhead">
+    <h1>Dokumentation</h1>
+
+    <h2>Shirley Lein - shle9332 - 670634 - Backend</h2>
+    <h2>Joern Seydel - sejo8887 - 670667 - Frontend</h2>
+  </div>
+  <div class="flexdoku">
+    <h4>04.12.22</h4>
+
+    <p>-Stylesheetgestaltung, Ablaufplanung Hausarbeit</p>
+    <p>-Stylesheets siehe Exposée</p>
+
+    <h5>Stylesheets</h5>
+    <img src="/docu-images/styleSheet1.png" class="dokupic" />
+
+    <img src="/docu-images/styleSheet3.png" class="dokupic" />
+
+    <h4>05.12.22</h4>
+    <p>Login-/Registerform Erstellung, Controlling, Connecting, Checks</p>
+
+    <h4>5-15.12.22</h4>
+    <p>Session, Middleware, pipe-funktion eingebunden</p>
+
+    <h4>16.12.22</h4>
+    <p>Three js und CSS Gestaltung und Grid Layout hinzugefügt</p>
+
+    <h4>17.12.22</h4>
+    <p>Sessionsprinzip und Fehler endlich verstanden und gefunden</p>
+
+    <h4>18.12.22</h4>
+    <p>Authorisation eingebunden, Ansichten differenziert</p>
+
+    <h4>21-28.12.22</h4>
+    <p>
+      Profil Erstellung, UploadProfilBild eingefügt und funktionsfähig gestaltet
+    </p>
+
+    <h4>28.12.22</h4>
+    <p>
+      3d Modell upload und Form-Eingabe Erstellung, Controlling, Connecting,
+      Checks <br />
+      Ordnerstrukturen und Dateibennenung verbessert
+    </p>
+    <p>Three js - Canvas zur Ansicht</p>
+
+    <h4>01.01.23</h4>
+    <p>allMyAssets.html Ansicht Veinigung von Canvas und MetaDaten Ansicht</p>
+    <p>
+      Einrichtung der Editierfunktion für Namen und Löschfunktion für GLB-Objekt
+    </p>
+    <h4>03/04.01.23</h4>
+    <p>allMyAssets.html Ansicht Veinigung von Canvas und MetaDaten Ansicht</p>
+    <p>Einrichtung der Editier- und Löschfunktion</p>
+
+    <h4>06/07.01.23</h4>
+    <p>Ansicht der index.html, Alle Nutzer können sich und andere sehen</p>
+    <p>Assetdetail Ansicht funktioniert</p>
+
+    <h4>08.01.23</h4>
+    <p>
+      Validate.js verbessert. Für Registrierung - EmailCheck, Passwortvergleich
+      und doppelter <br />
+      Username in der Datenbank
+    </p>
+    <p>Download Route und Möglichkeit für registrierte Nutzer</p>
+
+    <h4>09.01.23</h4>
+    <p>Kommentarfunktion - löschen Möglichkeit und Anzeigen</p>
+    <p>Download Route und Möglichkeit für registrierte Nutzer</p>
+
+    <h4>10.01.- 15.01.2023</h4>
+    <p>Debugen Debuggen Debuggen</p>
+
+    <div>
+      <h5>Backend - Shirley</h5>
+
+      <h4>Ziel und Funktionsumfang der Anwendung</h4>
+
+      <ul>
+        <li><b>MajorAdmin</b></li>
+        <ul>
+          <li>kann Rollen verteilen</li>
+          <li>was Admin auch kann</li>
+          <li>was User auch kann</li>
+        </ul>
+        <li><b>Admin</b></li>
+        <ul>
+          <li>Alle Kommentare löschen und User löschen</li>
+          <li>was User auch kann</li>
+        </ul>
+        <li><b>User</b></li>
+        <ul>
+          <li>Assets hochladen und Namen geben</li>
+          <li>eigenen Profil Daten ändern</li>
+          <li>Kommentare schreiben und eigene Kommentare löschen</li>
+          <li>Likes verteilen - beschränkt auf je 1 Like pro Asset</li>
+          <li>Profil anderer User sehen</li>
+        </ul>
+        <li><b>Nicht authorisierte User</b></li>
+        <ul>
+          <li>index Seite betrachten - Likes und Comments sehen</li>
+        </ul>
+      </ul>
+
+      <h4>Aufbau der Anwendung</h4>
+
+      <p>
+        Mit der in der Vorlesung beschriebenen Herangehensweisen wurde diese
+        Website erstellt. Im Hauptverzeichnis befindet sich die
+        <i>server.js</i>, wo ein simpler Server mit dem Port: 8080 mittels Deno
+        Runtime erstellt wird.
+      </p>
+      <ul>
+        Weiterhin befinden sich 4 Ordner mit Unterordnern darin
+        <li>
+          <b>data</b>
+          <ul>
+            <li>wwwUsers.db - die Datenbank</li>
+          </ul>
+        </li>
+
+        <li>
+          <b>public</b>
+          <ul>
+            <li>Css - Style Datei für die Website</li>
+            <li>Upload - Dateien der User</li>
+          </ul>
+        </li>
+        <li>
+          <b>src</b>
+          <ul>
+            <li>app.js</li>
+            <li>router.js</li>
+
+            <ul>
+              <b>middleware</b>
+              <li>sessions.js</li>
+
+              <b>Accessories</b>
+              <ul>
+                <li>authentication.js</li>
+                <li>csrf.js</li>
+                <li>dataHandling.js</li>
+                <li>faker.js</li>
+                <li>serveFiles.js</li>
+                <li>validation.js</li>
+              </ul>
+
+              <b>controller</b>
+              <ul>
+                <li>admin-controller.js</li>
+                <li>asset-controller.js</li>
+                <li>form-controller.js</li>
+                <li>main-controller.js</li>
+                <li>profil-controller.js</li>
+              </ul>
+
+              <b>models</b>
+              <ul>
+                <li>adminModel.js</li>
+                <li>assetModel.js</li>
+                <li>commentModel.js</li>
+                <li>userModel.js</li>
+              </ul>
+            </ul>
+          </ul>
+        </li>
+        <li>
+          <b> templates</b>
+          <ul>
+            <li>reallyDelete.html"</li>
+            <li>index.html</li>
+            <li>profile.html"</li>
+            <li>loginForm.html</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h4>Genauere Beschreibung des src-Ordners</h4>
+      <p>
+        In diesem Ordner befinden sich das Herzstück der Funktionalität dieser
+        Website.
+      </p>
+
+      <ul>
+        <h6><b>app.js</b></h6>
+
+        <li>
+          <b>handleRequest()</b> In der handleRequest-Funktion wird das
+          context-Objekt (ctx) definiert, initialisiert und durchgereicht.
+          <br /><br />
+          <b> const ctx = {</b>
+          <ul>
+            <li>
+              <b> db: db,</b>
+              <p>- fügt die externe Datenbank ein</p>
+            </li>
+            <li>
+              <b>
+                sessionStore:
+                sessionsControl.createSessionStore(sessionStore),</b
+              >
+              <p>
+                - erstellt einen Speicher bestehend aus Funktionen
+                (get(),set(),destroy()). Der Funktion wird eine außerhalb der
+                handleRequest-Funktion vor deklarierte Map übergeben.
+              </p>
+            </li>
+            <li>
+              <b> cookies: new CookieMap(request),</b>
+              <p>
+                - Hier wird ebenfalls auf eine außerhalb vordeklarierten Map
+                zurückgegriffen. Darin wird NUR der Cookie mit der Session ID
+                gespeichert.
+              </p>
+            </li>
+            <li>
+              <b> token: tokenMap,</b>
+              <p>
+                - Hier wird wieder auf eine außerhalb vordeklarierten Map
+                zurückgegriffen, die sämtliche Formular Tokens und andere
+                beinhaltet/speichert.
+              </p>
+            </li>
+            <li>
+              <b> state: { authenticated: false },</b>
+              <p>
+                - Dies beschreibt den Zustand eines Users. Standart ist nicht
+                authetifiziert.
+              </p>
+            </li>
+            <li>
+              <b> session: {},</b>
+              <p>
+                - Beinhaltet alle Informationen bezüglich eines Users. Das
+                Userobjekt wird darin zum Beispiel gespeichert.
+              </p>
+            </li>
+            <li>
+              <b> request: request,</b>
+              <p>- Schnittstelle zum Abruf von Resourcen - Anfrage</p>
+            </li>
+            <li>
+              <b> url: new URL(request.url),</b>
+              <p>- Namen der Routen</p>
+            </li>
+            <li>
+              <b> params: {},</b>
+
+              <p>- Speicherung von spezifischen Zuordnungen</p>
+            </li>
+            <li>
+              <b>
+                response: { headers: {}, body: undefined, status: undefined, },
+              </b>
+              <p>
+                - Antwort vom Server bestehend aus header Informationen, body
+                und status.
+              </p>
+            </li>
+            <li>
+              <b>nunjucks: nunjucks,</b>
+
+              <p>- hinzufügen der Funktionalität von Templating (Nunjucks).</p>
+            </li>
+          </ul>
+          <b> }</b> <br />
+          <br />
+          <p>
+            Über die pipe-Funktion wird bei jeder Server-Anfrage ein Array
+            namens middleware aus Funktionen aufgerufen. Es handelt sich um
+            folgende Funktionen
+          </p>
+
+          <ul>
+            <li>
+              <b> getSession()</b>
+              <p>
+                - prüft bei jedem Aufruf ob session keys vorhanden sind.<br />
+                Die Keys werden in 2 verschiedenen Maps gespeichert. Der
+                CookieMap für die zeitlich regulierbaren Speicherung der
+                SessionId und in der Sessionstore Map,<br />
+                wofür die sessionId benötigt wird und in dem der eigentliche
+                Inhalt der session auf dem Server gespeichert ist.<br />
+                Ist alles nicht vorhanden werden leere Objekte zurückgegeben.
+              </p>
+            </li>
+            <li>
+              <b> isAuthenticated()</b>
+              <p>
+                - Authentifiziert den User, je nach dem, ob er/sie sich
+                eingeloggt hat oder nicht. Dabei wird aus der normalen
+                tokenSammelstelle der sessionKey geholt und der
+                sessionIdOfLoginKey<br />
+                aus der CookieMap, sowie die Daten aus der Sessionstore geladen.
+                <br />Wenn keine validen Keys vorhanden sind, dann werden
+                undefined oder leere Objekte zurück gegeben.<br />Der nicht
+                authentifizierte User wird dann mit dem Antwort Status 303 auf
+                die index.html zurückgeleitet.<br />
+                Wenn alles richtig ist dann wird ein true auf die ctx.state.
+                authenticated gesetzt<br />
+                und der User kann die weiteren beschränkten Inhalte der Website
+                relativ uneingeschränkt nutzen.
+              </p>
+            </li>
+            <li>
+              <b> serveStaticFile("public")()</b>
+              <p>
+                - Verhindert das "Directory Traversal" - bietet mehr Sichertheit
+                und nur Dateien in dem public Ordner können sichtbar für
+                Außerhalb sein.
+              </p>
+            </li>
+            <li>
+              <b>routes()</b>
+              <p>
+                - verbindet die handleRequest() mit den verschiedenen
+                Controllern über Pfade.<br />
+                Es werden außerdem params im ctx zur genauen Darstellung eines
+                Inhalts gespeichert und ausgelesen.
+              </p>
+            </li>
+            <li>
+              <b>setSession()</b>
+              <p>
+                - Wenn sich etwas in der ctx.session befindet, dann wird die
+                sessionId oder ein neuer krypografisch sicherer
+                zufallsgenerierter Token als id erstellt, der cookie mit der
+                sessionId und dem Ablaufzeitpunkt erstellt.<br />
+                Wenn nichts in dem ctx.session Objekt vorhanden ist, wird zur
+                Sicherheit alles gelöscht (sessionstore und cookies).
+              </p>
+            </li>
+          </ul>
+          Das in der Variable "result" gespeicherte ctx-Objekt wird anschließend
+          weiterverabeitet und entweder, wenn der status 404 ergibt als
+          error-Template gerendert oder entsprechend der in den Controllern
+          gesetzen statuse, bodies und headers als Antwort zurückgegeben.
+        </li>
+
+        <h6><b>router.js</b></h6>
+
+        <li>
+          Diese Datei koordiniert alle Routen der Website zum Aufrufen
+          bestimmter Ressourcen. Die Funktion routes() ist im middleware[]
+          erklärt und findet darin Anwendung.
+        </li>
+
+        <h6><b>sessions.js</b></h6>
+        <li>
+          speichert und reguliert die session, löscht sowohl
+          alles(Token,Session,Cookies) bei Löschung des Users oder den Logout
+        </li>
+      </ul>
+      <br />
+    </div>
+    <!-- //////////////////////////////////////! -->
+    <div>
+      <h6><b>middleware-Ordner</b></h6>
+
+      <p>
+        Darin befinden sich alle Module und deren Funktionen, die im
+        middleware[] oder im ctx-Objekt bedeutsam sind.
+      </p>
+      <ul>
+        <h3><b>accessories - Nützliches Beiwerk</b></h3>
+
+        <li><b>authentication.js</b> - authentifiziert den Nutzer</li>
+        <li>
+          <b>csrf.js</b>
+          <ul>
+            <li>generateToken - generiert den kryptografisch sicheren Token</li>
+            <li>
+              checkToken(ctx, tokenName, formToken, navigateTo) - wird mehrmals
+              in den Controllern genutzt, um Formtokens zu überprüfen.
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b> dataHandling.js</b>
+          <ul>
+            <li>removeDataFromDirectory(path) -löscht Datei vom Server</li>
+            <li>
+              generateFilename(file, pathToFile) - generiert kryptische
+              unpersönliche Dateinamen zur Speicherung im Server.
+            </li>
+            <li>
+              addFileExtension(filename) - Bevor die 3D-Asset Datei auf dem
+              Server gespeichert wird, muss die richtige Dateiendung angefügt
+              werden.<br />
+              Dies ermöglicht das richtige Anzeigen der 3D Datei in Three.js. Da
+              eine automatische Speicherung nicht möglich ist.
+            </li>
+            <li>
+              checkAvatarFile(pathToFile) - prüft, ob es sich um einen faker.js
+              generiertes Bild in Form eines Website Links handelt. Damit in der
+              Html die Bilder richtig angezeigt werden.
+            </li>
+            <li>
+              createCommentObjectArray(commentsArray) - aus Übersichtsgründen
+              eine Funktione, die mittels einer for-of Schleife ein Array aus
+              Objekten erstellt.
+            </li>
+            <li>
+              createAssetObjectArray(assetArray) - aus Übersichtsgründen eine
+              Funktione, die mittels einer for Schleife ein Array aus Objekten
+              erstellt.
+            </li>
+            <li>
+              createDatapathArray(assetArray) - erstellt ein Dateipfadarray
+            </li>
+            <li>
+              deleteEverythingFromEverywhere(ctx, user) - löscht alles und
+              überall bis auf die Kommentare und likes anderer User Assets.
+            </li>
+          </ul>
+        </li>
+        <li><b>faker.js</b> - erzeugt random generierte Nutzer</li>
+        <li><b>serveFiles.js</b>- wurde in der handleRequest() beschrieben</li>
+
+        <li>
+          <b>validation.js </b> - beinhaltet Funktionen zur Validierung von
+          Texteingaben und Uploads - die Titel beschreiben die Funktionalität
+          <ul>
+            <li>isValidText = (text)</li>
+            <li>isValidZeroText = (text)</li>
+            <li>isValidBioText = (text)</li>
+            <li>isMimetypeOk = (type)</li>
+            <li>isExtensionOkImages = (name)</li>
+            <li>isExtensionOkAssets = (name)</li>
+            <li>isMimetypeAssetOk = (type)</li>
+            <li>
+              validateReg = async (formData, userNAmeArr) - Validiert die
+              Registrierung und prüft auf doppelte Usernamen sowie ob gleiche
+              Passwörter vorhanden sind.
+            </li>
+            <li>
+              validateProfileUpdate = async (ctx, formData, userNAmeArr) -
+              validiert den Profil Update - und vorallem --> doppelte Usernamen
+              dürfen nicht vergeben werden
+            </li>
+            <li>validateAssetUpload(file)</li>
+            <li>validateImageUpload(file)</li>
+            <li>isValidEmail(email)</li>
+            <li>deleteOldFile(ctx)</li>
+            <li>validateComment(formData)</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <!-- ////////////////////!Controller -->
+    <div>
+      <ul>
+        <h3><b>controller </b> Verabeitung und Darstellung</h3>
+
+        <li>
+          <b>admin-controller.js</b> - alles was Admin und Majoradmin Funktionen
+          beinhaltet
+          <ul>
+            <li>
+              submitRoleToUser(ctx) - fügt die neue Rolle der Datenbank hinzu,
+              Sicherheitsprüfung, ob session.user gleich "majoradmin" ist
+            </li>
+            <li>
+              showDeleteUser(ctx) - der zu löschende User wird angezeigt. es
+              wird dabei unterschieden, ob es sich um einen admin/majoradmin und
+              man sich selbst löschen möchte
+            </li>
+            <li>
+              submitDeleteUser(ctx) - Löschunge eines Users. Dabei wird
+              unterschieden in eigene Löschung und des Verbots der Löschung
+              eines MajorAdmin durch einen normalen Admin
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b> asset-controller.js</b> - alles was mit primär assets zu tun hat
+          <ul>
+            <li>
+              addDeleteAsset(ctx) - Anzeige von dem zu löschenden eigenen Asset
+            </li>
+            <li>
+              submitDeleteAsset(ctx) - asset wird aus allen tables der Datenbank
+              gelöscht
+            </li>
+            <li>
+              showDetailAsset(ctx) - Details des assets werden abgezeigt. ist
+              prinzipiell eine GET, jedoch wenn der Name geändert wird als POST
+              wird dieser in der DAtenbank geändert
+            </li>
+            <li>addAssets(ctx) - rendert den addAsset Form</li>
+            <li>
+              submitAddAssets(ctx) - prüft den Upload und rendert entweder
+              Errors oder speichert die Datei auf dem Server und den link dazu
+              in der Datenbank
+            </li>
+            <li>
+              previewAsset(ctx) - zeigt das hochgeladene Asset nocheinmal an
+            </li>
+            <li>
+              downloadAsset(ctx) - downloaded das angeklickte Asset nur wenn der
+              User authorisiert ist. Das heruntergeladenen Asset kann mit
+              Blender geöffnet werden.
+            </li>
+          </ul>
+        </li>
+
+        <li>
+          <b> form-controller.js</b> - alles was mit primär mit forms zu tun hat
+          <ul>
+            <li>addReg(ctx) - holt random Daten aus der faker.js</li>
+            <li>
+              submitAddReg(ctx) - prüft und speichert die vom User eingegebenen
+              Daten, kein gleicher Username
+            </li>
+            <li>addLogin(ctx) - rendert das Login Form</li>
+            <li>
+              submitCheckLogin(ctx) - prüft und speichert das Passwort und den
+              Usernamen des Users
+            </li>
+            <li>
+              showComment(ctx) - zeigt die likes, Kommentare und das Asset an
+            </li>
+            <li>
+              submitLikesComment(ctx) - likes werden geprüft und an die
+              Datenbank zur Speicherung geschickt
+            </li>
+            <li>
+              addWriteComment(ctx) - benfalls, wie show Comments, wird hierbei
+              der Form des KommentarFeldes angezeigt.
+            </li>
+            <li>
+              submitAddWriteComment(ctx) - das eingegebene Kommentar wird
+              überprüft und gespeichertSM
+            </li>
+            <li>
+              showDeleteEntryComment(ctx) - User können eigen Kommentare
+              löschen, Admins/majoradmin können alle Kommentare löschen, Render
+              eine HTML mit Abfrage Ob löschen oder nicht.
+            </li>
+            <li>
+              submitDeleteEntryComment(ctx) - Kommentar wird endgültig aus der
+              Datenbank gelöscht
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b> main-controller.js</b> - alles was mit vereinzelten controller
+          Funktionen zu tun hat
+          <ul>
+            <li>
+              indexController(ctx) - render die gesamte index für alle
+              Betrachtereinheiten
+            </li>
+            <li>
+              logOut(ctx) - regelt den Log out und löscht alle Tokens, Cookies
+              und Sessions
+            </li>
+            <li>error(ctx) - rendert die error HTML</li>
+            <li>aboutController(ctx) - rendert die about HTML</li>
+            <li>docuController(ctx) - rendert die Dokumentation HTML</li>
+            <li>kollophoneController(ctx) - rendert die Kollophone HTML</li>
+            <li>
+              notAllowed(ctx) - rendert die not allowed HTML - soll im Router
+              zusätzliche Sicherheit liefern
+            </li>
+          </ul>
+        </li>
+        <li>
+          <b> profile-controller.js</b> - alles was mit profile der Nutzer zu
+          tun hat
+          <ul>
+            <li>
+              ownProfile(ctx) - render as eigene Profil mit den gesamten Assets
+            </li>
+            <li>
+              profile(ctx) - beinhaltet die Ansicht anderer Nutzer der Website
+              bei dem intern der Majoradmin Rollen vergeben kann, der Admin und
+              Major Admin andere User löschen können und der einfache User sich
+              selbst löschen. assets werden ebenfalls daneben gerendert
+            </li>
+            <li>
+              profileEditAdd(ctx) - die ursprünglichen Eingaben des eigenen
+              Profils werden aus der Datenbank geholt und gerendert
+            </li>
+            <li>
+              profileEditSubmit(ctx) - die neuen Profileinträge werden geprüft
+              und gespeichert in der Datenbank, sowie wird das Profilbild auf
+              den Server gespeichert
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ////////////////////!Models -->
+    <ul>
+      <h3>
+        <b
+          >Models - beinhaltet Funktionen, die entweder Löschungen,
+          Hinzufügungen und Änderungen in der Datenbank einträgen
+        </b>
+      </h3>
+
+      <li>
+        <b>adminModel.js</b> - alles was Admin und Majoradmin ändern darf
+        <ul>
+          <li>deleteAnUserFromDB(db, userId)- Löscht einen User</li>
+          <li>updateRoleDB(db, role, id) - updated eine Rolle</li>
+        </ul>
+      </li>
+      <li>
+        <b> assetModel.js</b> - alles was mit primär assets zu tun hat
+        <ul>
+          <li>deleteAnAssetFromDB(db, id) - asset wird gelöscht</li>
+          <li>
+            deleteAllAssetsByUserIdArray = (db, userId) - Alle Assets eines
+            Users werden gelöscht
+          </li>
+          <li>getOneAssetByIdDB(db, id) - ein Asset wird mit Id geholt</li>
+          <li>
+            getLastAssetsByIdDB(db, userId) - das letzte Asset wird mit Id
+            geholt
+          </li>
+          <li>
+            getAssetsByDatapathDB(db, datapath) - ein Asset wird mit Datapath
+            geholt
+          </li>
+          <li>
+            allAssetsByUserIdArray = (db, userId) - alle Assets eines bestimmten
+            Users wird mit id geholt
+          </li>
+          <li>allAssetsArray = (db) - Alle gesamten Assets werden geholt</li>
+          <li>
+            updateNameInAssetPathDB = (db, name, id) - der Name des Asset wird
+            über id geupdated
+          </li>
+          <li>
+            updateUsernameDB(db, username, userId) - updatet den Usernamen des
+            Assets
+          </li>
+          <li>addAssetToDB(db, assetObject) - fügt ein Asset hinzu</li>
+          <li>getLikesByIdDB(db, id) - holt die Likes eines Assets</li>
+        </ul>
+      </li>
+      <li>
+        <b> commentModel.js</b> - alles was mit primär mit Comments zu tun hat
+        aus der Datenbank
+        <ul>
+          <li>allCommentsArr = (db) - alle Comments in einem Array</li>
+          <li>
+            getallCommentsArrByAssetIdDB = (db, assetId)- Alle Comments eines
+            Assets
+          </li>
+          <li>getCommentByIdDB(db, id) - ein Comments mit Id</li>
+          <li>deleteCommentsFromDB(db, id) - Comments löschen</li>
+          <li>addCommentToDB(db, commentObject) - Comments hinzufügen</li>
+          <li>
+            updateCommentsDB = (db, username, userId) - username als author wird
+            geupdated
+          </li>
+        </ul>
+      </li>
+      <li>
+        <b> likesModel.js</b> - alles was mit dem Table AlreadyLiked zu tun hat
+        aus der Datenbank
+        <ul>
+          <li>
+            getAssetIdByUserIdDB(db, userId, assetId) - checkt, ob assetId in
+            Verbindung mit userId vorhanden ist
+          </li>
+          <li>
+            addAlreadyLikedToDB(db, likeOBJ) - fügt die assetId und userId
+            Kombination zusammen ein
+          </li>
+          <li>
+            deleteAssetsAlreadyLikedDB = (db, assetId) - löscht die Kombination
+          </li>
+        </ul>
+      </li>
+      <li>
+        <b> userModel.js</b> - alles was mit dem Table User zu tun hat aus der
+        Datenbank
+        <ul>
+          <li>allUsersArr = (db) - alle User</li>
+          <li>getUserByIdDB(db, id) - ein User</li>
+          <li>
+            getByUsernameDB(db, username) - ein User anhand des Usernamens
+          </li>
+          <li>getAvatarPathByIdDB(db, id) - ein Avatarpfad des Users</li>
+          <li>
+            allUsernamesArray = (db, username) - alle Usernamen in einem Array
+          </li>
+          <li>addToDB(db, data) - einen User hinzufügen</li>
+          <li>
+            updateUsersProfileDB = (db, updateUserObj, id) - ein User updaten
+          </li>
+          <li>
+            updateFileDB(db, avatar, id) - ein avatarfile des Users updaten
+          </li>
+          <li>deleteUserFromDB(db, id) - ein User löschen</li>
+        </ul>
+      </li>
+    </ul>
+    <!-- //////////////////////////////////////////? -->
+    <div>
+      <h4>Sicherheitsaspekte</h4>
+
+      <p>
+        <b>Cross-Site-Scripting</b> - Es wurde für jeden Form ein
+        krytografischer randomisierter Token erzeugt und geprüft
+      </p>
+      <p>
+        <b>Routen</b> wurden zusätzlich im Router gesichert, sofern es möglich
+        ist
+      </p>
+      <p>Passwörter werden verschlüsselt gespeichert</p>
+      <p>
+        Bild und Asset Daten werden verschlüsselt im public Ordner gespeichert
+      </p>
+      <p>
+        Variablen werden mit Platzhaltern and den SQL Datenbankbefehl übergeben
+      </p>
+
+      <h4>Aufgetretene Probleme und deren Lösungen</h4>
+      <p>
+        Es traten Probleme in in der commentAsset.html. Da 2 unterschiedliche
+        Forms und der Abfrage dieser mir nicht bekannt war. So dass die naheste
+        und schnellste Lösung eine neue HTML Datei mit Controller zuerstellen,
+        um darin den nächsten Form verarbeiten zu können.
+      </p>
+      <p>
+        faker.js - unmöglich konsitent zusammenhänge Daten zu generieren.
+        Veraltete API und DOKU
+      </p>
+    </div>
+    <div>
+      <h4>Aufbau der Datenbank</h4>
+      <ul>
+        Die Datenbank besteht aus vier Tables
+        <li>Comments - speichert die Daten der Kommentare</li>
+        <li>User - speichert die Daten der Nutzer bei Registrierung</li>
+        <li>Assets - speichert die Nutzer der Assets</li>
+        <li>
+          AlreadyLike - speichert Likes, bestehend aus nur einem
+          zusammengesetzten primaryKey aus assetId und userId
+        </li>
+      </ul>
+      ,
+    </div>
+
+    <h5>Frontend = Joern</h5>
+
+    <h4>"https://validator.w3.org/"</h4>
+    <h4>Themenfindung:</h4>
+    <p>
+      Wir wollten damals gerne einen Assetstore umsetzen, einen speziellen Grund
+      gab es dafür nicht aber wir stellen aufjeden Fall gerne 3D-Content her,
+      der den Bezug zum Thema bringt. Da uns aber einige Bereiche eines Stores
+      fehlen, habe wir den Assetstore eher einen Open Source Plattform
+      abgewandelt. Die nun Open Source Assets heißt. Die Abänderung liegt in
+      einem auch daran das wir keinen Warenkorb bestitzen.
+    </p>
+
+    <h4>StyleSheet:</h4>
+    <br />
+    <p>
+      Zu Beginn unserer Hausarbeit haben wir uns Gedanken darum gemacht wie wir
+      unsere Website ungefähr aufbauen wollen. Dafür haben wir innerhalb
+      Illustrator ein Sheet erstellt an dem wir uns anfänglich orientiert haben.
+      Dies hat uns am Anfang bei der Planung des Aufbaus der Website geholfen.
+    </p>
+
+    <h4>Aufbau der Seite:</h4>
+    <br />
+    <p>
+      Für den Aufbau der Website haben wir ein Grid-Layout gebaut. In der
+      Desktopansicht ist dieses etwas komplexer als in der Mobileansicht. In
+      dieser reiht sich der Content einfach untereinander weg, so dass der User
+      einfach runter scrollen muss. Die Desktopansicht schichtet sich vom
+      Header, Navbar/BurgerMenu über drei divs die dann nebeneinandner
+      angeordnet sind und die Darstellungsfläche für unseren Content bieten
+      soll.
+    </p>
+
+    <h4>Media Querries:</h4>
+    <br />
+    <p>
+      Die media Querries wechseln schon in einer recht hohen Pixelgröße in das
+      für die Mobileansicht gewählte Gridlayout. gewaehlte GridLayout @media
+      (min-width:1095px){...} @media (max-width: 1094px){...} Das liegt
+      daran,dass da durch frühe Fehler kaschiert wurden. Leider gibt es einen
+      kleinen Bildschirmbereich in dem die Canvase aus dem Centrum des
+      Bildschirms verschwinden.
+    </p>
+
+    <h4>Navigationsbereich:</h4>
+    <br />
+    <p>
+      Die Navigation erfolgt entweder in der Desktopansicht über eine "Navbar",
+      die den User durch verlinkungen durch die Seiten führt oder innerhalb der
+      Mobileansicht durch klick auf ein Burger Menu ein Burger Menu Content mit
+      einer Transition ausfährt. Für den BurgerButton wurde ein kleines Skript
+      eingefuegt, dass einen addEventListener aufruft und so den content
+      sichtbar macht.
+    </p>
+
+    <h4>Contentbereich</h4>
+    <br />
+    <p>
+      Unser Contentbereich gliedert sich in contentmeta, mainContent und
+      overView auf. Diese drei Divs stellen dem User die
+      Hauptinteraktionsflaeche auf dem er die Assetsammlung von bereits
+      gelaunchden Assets ansehen kann. Weiterhin kann er von hier Assets selber
+      hochladen oder runter, Assets kommentieren oder mit einem "like" Button
+      für gut bewerten. Natürlich werden auch Profiladministrative dienste hier
+      verwaltet. contentMeta: Ist mit overView ein kleinerer Bereich des
+      Contentbereiches, In diesem Bereich wird hauptsächlich Profil
+      administrative Arbeit erledigt. mainContent: Bietet dem Canavas von
+      three.js platz overView: War für weitere funktionen eines Stores geplant,
+      bietet hauptsälcih nun platz für die Kommentarfunktion.
+    </p>
+
+    <h4>Footer</h4>
+    <br />
+    <p>
+      Der Footer befindet sich am unteren Ende des Bildschirmrandes und stellt
+      eine kurze Erklärung zu der Seite "Open Source Assets" unteranderem werden
+      die beiden Creator erwähnt Darunter folgen drei Icons die nur zum
+      auschmücken gedient haben außerdem befinden sich dort drei verlinkungen
+      die zur Dokumentation, zum Kollophone und dem Impressum führen. Diese sind
+      hingegen zu den Icons valide.
+    </p>
+
+    <h4>layout.html</h4>
+    <br />
+    <p>
+      Innerhalb der layout.html haben wir das Template erstellet, welches wir
+      mit der Templating Engine Nunjucks auf unsere weiteren htmls uebertragen
+      haben. Die layout.html wurde im aktuell html:5 Format erstellt wurden. Für
+      die einzelnen Bereiche des Layout haben wir uns Tags erstellt mit denen
+      wir auf den einzelnen Seiten auf die einzelnen Grid Areas zugreifen und
+      ueberschreiben zu können. Für contentMeta wurde % block right % %endblock%
+      verwendet. Das wir die linke Bildschirmseite mit % block right%. Achtung
+      Verwirrungsgefahr! OverView hat hingegen % block left % %endblock%
+      bekommen. Unsere Hauptfläche wurde mit % block Content % %endblock%
+      angesprichen, wo auch der meiste Inhalt wie in % block right% %endblock%
+      ueberschrieben. Die Navbar hat eine % if userAuth % Abfrage erhalten, die
+      Prueft ob der User auch als User eingeloogt ist. Dementsprechend wird
+      innerhalb entsprechend mehr oder weniger angezeigt.
+    </p>
+
+    <p>% if userAuth %,</p>
+    <p>
+      Falls der User angemeldet ist wird ihm der Inhalt Log Out, Add an 3D Asset
+      und Profile angeziegt, andernfalls % else % nur der Login und Sign up free
+      Bereich % endif % Die selbe Methode wurde auch für das Burger Menu
+      benutzt.
+    </p>
+
+    <br />
+
+    <h5>Aufgetretene Probleme und deren Lösungen</h5>
+    <br />
+    <h4>three.js - Ladezeit</h4>
+    <br />
+    <p>
+      Leider hat jede html die mit three.js bestueckt wurde ein gewissen
+      Ladebedarf. Manche htmls haben sogar mehrere Canvase, wie zum Beispiel die
+      index.html oder die jeweiligen User/inen Profilseiten, was die Ladezeit
+      nihct beguenstigt. Je nach Assetvolumen muss man etwas Geduld mitbringen.
+      Auf der index.html, kann man den Zeitverzug besonder gut beobachten. Bevor
+      die einzelnen Canvase erscheinen verzieht sich der Banner deutliche nach
+      unten und sobald der Ladeprozess fertig ist schiebt er sich an seinen
+      eigentlich Platz.Waehrend der Ladezeit befinden sich nur die Typo in den
+      Cards.
+    </p>
+
+    <h4>three.js - responisve Canvase</h4>
+
+    <br />
+
+    <p>
+      Desweiteren war die responisve Skarlierung des Canvases nicht sonderlich
+      einfach umzusetzen. Momentan ist es leider so, dass man nach dem skalieren
+      einer Seite, die Seite einmal am besten neu laden sollten. Der Canvas
+      passt sich der Skalierung des neuen Bildschirmes an.
+    </p>
+
+    <h4>css - media Querries</h4>
+    <p>
+      Leider wurde der Css part deutlich falsch angesetzt, saemtliche Basiswerte
+      haetten außerhalb der Querries erzeugt werden müssen. So ist leider nach
+      gewisser Zeit eine Überlagerung enstanden. Deutlich zusehen ist, dass an
+      dem Header der sich wie wild immer von oben nach unten bewegt, wenn man
+      durch die Seiten klickt. Zum Teil verschwindet die Ueberschrift
+    </p>
+  </div>
+</section>
+{%endblock%}

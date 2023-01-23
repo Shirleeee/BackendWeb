@@ -1,0 +1,167 @@
+{% extends "layout.html" %} {%block left%} {% if userAuth %}
+
+<div class="commentBox">
+  <div class="detailImage_comment_text">
+    <article>
+      <p>{{comment.text}}</p>
+    </article>
+
+    <!-- action="/submitAddComment/{{ model.id }}" -->
+    <form
+      data-form="form-Comment"
+      accept-charset="UTF-8"
+      method="post"
+      novalidate=""
+    >
+      <input type="hidden" name="_csrf" value="{{form._csrf}}" />
+
+      <textarea name="text" placeholder="Add comment..."></textarea>
+
+      <input class="submitButton" type="submit" />
+    </form>
+  </div>
+</div>
+<p>{{error.comment}}</p>
+{%endif%} {%endblock%}
+
+<!-- //////////////////////////////! right is left-->
+
+{%block right%}
+<div class="alltheComments">
+  <p id="getDatafile" data-file-name="{{model.datapath}}" hidden></p>
+  <p>All the comments:</p>
+  {% for comment in comments %}
+  <div>
+    <div>
+      <p>
+        <a href="/profile/{{comment.userId}}">{{comment.author}}</a> |
+        {{comment.releasedDate}}
+      </p>
+    </div>
+    <div>
+      <article>
+        <p>{{comment.commentText}}</p>
+      </article>
+    </div>
+    {% if username === comment.author or role === "admin" or role ===
+    "majoradmin" %}
+    <button>
+      <a href="/deleteComment/{{comment.id}}">Delete comment</a>
+    </button>
+    {%endif%}
+  </div>
+  {% endfor %} {% if error %}
+  <p>{{error.comment}}</p>
+
+  {% endif %} {%endblock%}
+</div>
+<!-- ////////////////////////////! -->
+
+{%block content%}
+<div class="liken">
+  <p id="getDatafile" data-file-name="{{model.datapath}}" hidden>
+    Datafilename: {{model.datapath}}
+  </p>
+  <div id="getLikes" data-file-name="{{model.likes}}">{{model.likes}}</div>
+</div>
+<script type="module">
+  import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
+  import { GLTFLoader } from "https://cdn.jsdelivr.net/npm/three@0.118.1/examples/jsm/loaders/GLTFLoader.js";
+  import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js";
+
+  const scene = new THREE.Scene();
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+
+  // Berechnen Sie die Größe des Fensters basierend auf der Größe des Bildschirms
+  let windowWidth = screenWidth / 3;
+  let windowHeight = screenHeight / 3;
+
+  // Legen Sie die Größe des Fensters fest
+  const windowSmallWidth = windowWidth;
+  const windowSmallHeight = windowHeight;
+
+  const camera = new THREE.PerspectiveCamera(
+    75,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(windowSmallWidth, windowSmallHeight);
+  // Hintergrundbeleuchtung
+  renderer.setClearColor(new THREE.Color(0x87ceeb));
+  // Boden
+
+  const geometry = new THREE.PlaneGeometry(100, 100, 1, 1);
+  geometry.rotateX(-Math.PI / 2);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0x808080,
+    castShadow: true,
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  mesh.position.set(0, -10, 0);
+  scene.add(mesh);
+
+  document.querySelector(".mainContent").appendChild(renderer.domElement);
+
+  // Main und Dreipunktbeleuchtung
+  const mainLight = new THREE.PointLight(0xffffff, 1, 1000);
+  const fillLight = new THREE.PointLight(0xffffff, 0.75, 1000);
+  const rimLight = new THREE.PointLight(0xffffff, 0.5, 1000);
+  const light = new THREE.AmbientLight(0x404040);
+
+  mainLight.position.set(0, 0, 100);
+  fillLight.position.set(100, 100, 100);
+  rimLight.position.set(-100, -100, 100);
+
+  scene.add(mainLight);
+  scene.add(fillLight);
+  scene.add(rimLight);
+  scene.add(light);
+
+  let datafileName = document
+    .querySelector("#getDatafile")
+    .getAttribute("data-file-name");
+
+  datafileName = "/" + datafileName;
+  console.log(datafileName + " <---------->");
+
+  const gltfLoader = new GLTFLoader();
+
+  let assetobj;
+
+  gltfLoader.load(datafileName, (asset) => {
+    asset.scene.position.set(0, -0.5, 0);
+
+    let position = new THREE.Vector3(
+      asset.scene.position.x,
+      asset.scene.position.y,
+      asset.scene.position.z
+    );
+    assetobj = asset.scene;
+    console.log(position);
+    scene.add(asset.scene);
+  });
+
+  // Objekt Controller
+
+  const controls = new OrbitControls(camera, renderer.domElement);
+  //mouse rotation mit klick + scroll
+  controls.target.set(0, 0, 0);
+  controls.enableRotate = true;
+  camera.position.set(0, 10, 20);
+  controls.update();
+  // koordinatensystem
+
+  export function animate() {
+    requestAnimationFrame(animate);
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+</script>
+
+{%endblock%}
